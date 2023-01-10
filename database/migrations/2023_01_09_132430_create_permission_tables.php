@@ -34,7 +34,7 @@ class CreatePermissionTables extends Migration
             $table->unique(['name', 'guard_name']);
         });
 
-        Schema::create($tableNames['role'], function (Blueprint $table) use ($teams, $columnNames) {
+        Schema::create($tableNames['roles'], function (Blueprint $table) use ($teams, $columnNames) {
             $table->bigIncrements('id'); // role id
             if ($teams || config('permission.testing')) { // permission.testing is a fix for sqlite testing
                 $table->unsignedBigInteger($columnNames['team_foreign_key'])->nullable();
@@ -83,7 +83,7 @@ class CreatePermissionTables extends Migration
 
             $table->foreign(PermissionRegistrar::$pivotRole)
                 ->references('id') // role id
-                ->on($tableNames['role'])
+                ->on($tableNames['roles'])
                 ->onDelete('cascade');
             if ($teams) {
                 $table->unsignedBigInteger($columnNames['team_foreign_key']);
@@ -108,7 +108,7 @@ class CreatePermissionTables extends Migration
 
             $table->foreign(PermissionRegistrar::$pivotRole)
                 ->references('id') // role id
-                ->on($tableNames['role'])
+                ->on($tableNames['roles'])
                 ->onDelete('cascade');
 
             $table->primary([PermissionRegistrar::$pivotPermission, PermissionRegistrar::$pivotRole], 'role_has_permissions_permission_id_role_id_primary');
@@ -135,7 +135,7 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_roles']);
         Schema::drop($tableNames['model_has_permissions']);
-        Schema::drop($tableNames['role']);
+        Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
     }
 }

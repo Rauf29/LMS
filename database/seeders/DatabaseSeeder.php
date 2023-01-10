@@ -18,23 +18,6 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    private function create_user_with_role($type, $name, $email) {
-        $role = Role::create([
-            'name' => $type
-        ]);
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => bcrypt('password')
-        ]);
-        if($type === 'Super Admin') {
-            $role->givePermissionTo(Permission::all());
-        } elseif($type === 'Leads') {
-            $role->givePermissionTo('lead-management');
-        }
-        $user->assignRole($role);
-        return $user;
-    }
 
     public function run()
     {
@@ -59,9 +42,27 @@ class DatabaseSeeder extends Seeder
             'description' => 'Laravel is a web application framework with expressive, elegant syntax. We have already laid the foundation freeing you to create without sweating the small things.',
             'image' => 'https://laravel.com/img/logomark.min.svg',
             'user_id' => $teacher->id,
-            'price'=> 500
+            'price'=> 500,
         ]);
         // create curriculum
        Curriculum::factory(10)->create();
+    }
+
+    private function create_user_with_role($type, $name, $email) {
+        $role = Role::create([
+            'name' => $type
+        ]);
+        $user = User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => bcrypt('password')
+        ]);
+        if($type === 'Super Admin') {
+            $role->givePermissionTo(Permission::all());
+        } elseif($type === 'Leads') {
+            $role->givePermissionTo('lead-management');
+        }
+        $user->assignRole($role);
+        return $user;
     }
 }
