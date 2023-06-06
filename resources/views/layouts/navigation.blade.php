@@ -18,8 +18,17 @@
                     <x-nav-link :href="route('admission')" :active="request()->routeIs('admission')">
                         {{ __('Admission') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('course.index')" :active="request()->routeIs('course.index')">
+                        {{ __('Courses') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('invoice-index')" :active="request()->routeIs('invoice-index')">
                         {{ __('Invoices') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('question.index')" :active="request()->routeIs('question.index')">
+                        {{ __('Quistions') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('quiz.index')" :active="request()->routeIs('quiz.index')">
+                        {{ __('Quiz') }}
                     </x-nav-link>
                     @can('lead-management')
                     <x-nav-link :href="route('lead.index')" :active="request()->routeIs('lead.index')">

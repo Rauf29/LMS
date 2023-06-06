@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CurriculumController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Quiz;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\Usercontroller;
@@ -8,6 +10,11 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\AdmissionController;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\StripePaymentController;
+
 
 
 
@@ -43,6 +50,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice-index');
     Route::get('/invoice{id}', [InvoiceController::class, 'show'])->name('invoice-show');
 
+    Route::resource('course', CourseController::class);
+    Route::resource('class', CurriculumController::class);
+    Route::resource('quiz', QuizController::class);
+    Route::resource('question', QuestionController::class);
+
+    Route::get('/quiz-show/{id}', [QuizController::class, 'quizShow'])->name('quiz-show');
+    Route::post('/stripe-payment', [StripePaymentController::class, 'stripePayment'])->name('stripe-payment');
 });
 
 require __DIR__.'/auth.php';

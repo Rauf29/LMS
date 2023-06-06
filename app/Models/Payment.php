@@ -11,5 +11,6 @@ class Payment extends Model
     protected $fillable = [
         'amount',
         'invoice_id',
+        'transaction_id'
     ];
 }
